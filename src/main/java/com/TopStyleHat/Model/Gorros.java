@@ -21,10 +21,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "Gorro")
+@Table(name = "Gorros")
 
-
-public class Gorro {
+public class Gorros {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,9 +44,5 @@ public class Gorro {
     @Min(value = 1, message = "el precio minimo es ")
     @Max(value = 5, message = "El valor maximo es")
     private Integer precio;
-
-
-
-
 
 }

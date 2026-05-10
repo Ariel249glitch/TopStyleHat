@@ -14,23 +14,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.TopStyleHat.DTO.MarcaDTO;
-import com.TopStyleHat.Model.Marca;
-import com.TopStyleHat.Service.MarcaService;
+
+import com.TopStyleHat.DTO.MarcasDTO;
+
+import com.TopStyleHat.Model.Marcas;
+import com.TopStyleHat.Service.MarcasService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/Marca")
-public class MarcaController {
+@RequestMapping("/api/v1/Marcas")
+public class MarcasController {
 
     @Autowired
-    MarcaService marcaService;
+    MarcasService marcasService;
 
-    //Mostrar todas las Marcas
+     //Mostrar todas las Marcas
     @GetMapping
-    public ResponseEntity<?> TodasLasMarcas(){
-        List<MarcaDTO> marcas = marcaService.MostrarTodas();
+    public ResponseEntity<?> MarcasTodas(){
+        List<MarcasDTO> marcas = marcasService.MostrarTodas();
         if (!marcas.isEmpty()) {
             return new ResponseEntity<>("No hay Marcas", HttpStatus.OK);
         }
@@ -41,8 +43,8 @@ public class MarcaController {
     @GetMapping("/{id}")
     public ResponseEntity<?> BuscarPorId(@PathVariable Integer id){
         try {
-            MarcaDTO marca = marcaService.buscarPorId(id);
-            return new ResponseEntity<>(marca, HttpStatus.ACCEPTED);
+            MarcasDTO marcas = marcasService.buscarPorId(id);
+            return new ResponseEntity<>(marcas, HttpStatus.ACCEPTED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>("No se encontro la Marca", HttpStatus.NOT_FOUND);
         }
@@ -50,9 +52,9 @@ public class MarcaController {
 
     //Agregar
     @PostMapping
-    public ResponseEntity<?> agregarMarca(@Valid @RequestBody Marca marca){
+    public ResponseEntity<?> agregarMarcas(@Valid @RequestBody Marcas marcas){
         try {
-            return new ResponseEntity<>(marcaService.guardarMarca(marca), HttpStatus.CREATED);
+            return new ResponseEntity<>(marcasService.guardarMarcas(marcas), HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>("No se guardo la Marca", HttpStatus.BAD_REQUEST);
         }
@@ -60,10 +62,10 @@ public class MarcaController {
 
     //Actualizar
     @PutMapping("/id")
-    public ResponseEntity<Marca> actualizarBrand(@PathVariable Integer id, @RequestBody Marca brand){
+    public ResponseEntity<Marcas> actualizarBrands(@PathVariable Integer id, @RequestBody Marcas brands){
         try {
-            Marca newBrand = marcaService.actualizarMarca(id, brand);
-            return new ResponseEntity<>(newBrand, HttpStatus.OK);
+            Marcas newBrands = marcasService.actualizarMarcas(id, brands);
+            return new ResponseEntity<>(newBrands, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -71,8 +73,8 @@ public class MarcaController {
 
     //Eliminar
     @DeleteMapping
-    public ResponseEntity<String> eliminarBrand(@PathVariable Integer id){
-        String resultado = marcaService.EliminarMarca(id);
+    public ResponseEntity<String> eliminarBrands(@PathVariable Integer id){
+        String resultado = marcasService.EliminarMarcas(id);
 
         if (resultado.contains("Eliminada")){
             return new ResponseEntity<>(resultado, HttpStatus.OK);
@@ -80,9 +82,5 @@ public class MarcaController {
             return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
         }
     }
-
-
-
-
 
 }
