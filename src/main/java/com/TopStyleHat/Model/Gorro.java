@@ -1,10 +1,15 @@
 package com.TopStyleHat.Model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -46,8 +51,23 @@ public class Gorro {
     @Max(value = 5, message = "El valor maximo es")
     private Integer precio;
 
+    
+    //Gorro Material
+    @OneToMany(mappedBy = "gorro")
+    private List<Materiales> materiales;
 
+    //Gorro marca
+    @OneToMany(mappedBy = "gorro")
+    private List<Marcas> marcas;
 
+    //Gorro - sexo
+    @ManyToOne
+    @JoinColumn(name = "sexo_id")
+    private Sexo sexo;
+
+    //gorro - boleta
+    @OneToMany(mappedBy = "gorro")
+    private List<Gorros> gorros;
 
 
 }

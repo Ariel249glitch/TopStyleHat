@@ -1,9 +1,12 @@
 package com.TopStyleHat.Model;
 
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -30,6 +33,11 @@ public class Marca {
     @NotBlank (message = "El nombre es obligatorio")
     @Size (min = 10, max = 50, message = "El nombre debe tener entre 10 y 50 caracteres")
     private String nombre;
+
+
+    //Marca Gorro
+    @OneToMany(mappedBy = "marca")
+    private List<Marcas> marcas;
 
 
 }

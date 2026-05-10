@@ -3,6 +3,8 @@ package com.TopStyleHat.Model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -25,5 +27,13 @@ public class Materiales {
     @NotBlank (message = "El nombre es obligatorio")
     @Size (min = 3, max = 20, message = "El nombre debe tener entre 3 y 20 caracteres")
     private String nombre;
+
+    @ManyToOne
+    @JoinColumn(name = "gorro_id")
+    private Gorro gorro;
+
+    @ManyToOne
+    @JoinColumn(name = "material_id")
+    private Material material;
 
 }

@@ -45,4 +45,6 @@ public class Gorros {
     @Max(value = 5, message = "El valor maximo es")
     private Integer precio;
 
+    
+
 }

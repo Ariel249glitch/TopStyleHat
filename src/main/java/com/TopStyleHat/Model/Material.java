@@ -1,8 +1,11 @@
 package com.TopStyleHat.Model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -26,5 +29,6 @@ public class Material {
     @Size (min = 10, max = 50, message = "El nombre debe tener entre 10 y 50 caracteres")
     private String nombre;
 
-    
+    @OneToMany(mappedBy = "material")
+    private List<Materiales> materiales;
 }
