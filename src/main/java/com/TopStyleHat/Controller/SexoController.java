@@ -2,7 +2,6 @@ package com.TopStyleHat.Controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,59 +13,58 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.TopStyleHat.DTO.MaterialDTO;
 
-import com.TopStyleHat.Model.Material;
-import com.TopStyleHat.Service.MaterialService;
+
+import com.TopStyleHat.DTO.SexoDTO;
+import com.TopStyleHat.Model.Sexo;
+import com.TopStyleHat.Service.SexoService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/Material")
-
-public class MaterialController {
+@RequestMapping("/api/v1/Sexo")
+public class SexoController {
 
     @Autowired
-    MaterialService materialService;
+    SexoService sexoService;
 
-
-    //Mostrar todos los materiales
+    //Mostrar todos
     @GetMapping
-    public ResponseEntity<?> TodosLosMateriales(){
-        List <MaterialDTO> materiales = materialService.mostrarTodos();
-        if (!materiales.isEmpty()) {
-            return new ResponseEntity<>("No hay Materiales", HttpStatus.OK);
+    public ResponseEntity<?> MostrarTodos(){
+        List <SexoDTO> sexo = sexoService.mostrarTodos();
+        if (!sexo.isEmpty()) {
+            return new ResponseEntity<>("No hay registros", HttpStatus.OK);
         }
-        return new ResponseEntity<>("No hay Materiales", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("No hay registros", HttpStatus.NO_CONTENT);
     }
 
-    //Buscar por id
+    //buscar por id
     @GetMapping("/{id}")
     public ResponseEntity<?> BuscarPorId(@PathVariable Integer id){
         try {
-            MaterialDTO material = materialService.buscarPorId(id);
-            return new ResponseEntity<>(material, HttpStatus.ACCEPTED); 
+            SexoDTO sexo = sexoService.buscarPorId(id);
+            return new ResponseEntity<>(sexo, HttpStatus.ACCEPTED);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>("No se encontro la Marca", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No se encontro", HttpStatus.NOT_FOUND);
         }
     }
 
     //Agregar
     @PostMapping
-    public ResponseEntity<?> agregarMaterial(@Valid @RequestBody Material material){
+    public ResponseEntity<?> agregarSexo(@Valid @RequestBody Sexo sexo){
         try {
-            return new ResponseEntity<>(materialService.guardarMaterial(material), HttpStatus.CREATED);
+            return new ResponseEntity<>(sexoService.guardarSexo(sexo), HttpStatus.CREATED);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>("No se guardo el material", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("No se guardo", HttpStatus.BAD_REQUEST);
         }
     }
 
     //Actualizar
     @PutMapping("/id")
-    public ResponseEntity<Material> actualizarStuff(@PathVariable Integer id, @RequestBody Material stuff){
+    public ResponseEntity<Sexo> actualizarGenero(@PathVariable Integer id, @RequestBody Sexo genero){
         try {
-            Material newStuff = materialService.actualizarMaterial(id, stuff);
-            return new ResponseEntity<>(newStuff, HttpStatus.OK);
+            Sexo newGenero = sexoService.actualizarSexo(id, genero);
+            return new ResponseEntity<>(newGenero, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -75,7 +73,7 @@ public class MaterialController {
     //Eliminar
     @DeleteMapping
     public ResponseEntity<String> eliminarStuff(@PathVariable Integer id){
-        String resultado = materialService.eliminarMaterial(id);
+        String resultado = sexoService.eliminarSexo(id);
 
         if (resultado.contains("Eliminado")){
             return new ResponseEntity<>(resultado, HttpStatus.OK);
@@ -83,10 +81,5 @@ public class MaterialController {
             return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
         }
     }
-
-
-
-
-
 
 }

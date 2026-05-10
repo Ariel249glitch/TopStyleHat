@@ -60,7 +60,7 @@ public class MaterialService {
     //Eliminar Material
     public String eliminarMaterial(Integer id){
         try {
-            Material material = materialRepository.findById(id).orElseThrow(() ->  new RuntimeException(" se puede eliminar el material con id" + id + "No existe"));
+            Material material = materialRepository.findById(id).orElseThrow(() ->  new RuntimeException("no se puede eliminar el material con id" + id + "No existe"));
             materialRepository.delete(material);
             return "El material '" + material.getNombre() + "' a sido eliminado";
         } catch (RuntimeException e) {
