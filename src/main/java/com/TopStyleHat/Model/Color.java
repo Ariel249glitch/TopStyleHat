@@ -1,43 +1,30 @@
 package com.TopStyleHat.Model;
 
-
-import java.util.List;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
-@Table(name = "Marcas")
-
-
-public class Marca {
+@Table(name = "colores_catalogo")
+public class Color {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    
-    @NotBlank (message = "El nombre es obligatorio")
-    @Size (min = 10, max = 50, message = "El nombre debe tener entre 10 y 50 caracteres")
+    @NotBlank(message = "El nombre del color es obligatorio")
+    @Size(min = 3, max = 50, message = "El color debe tener entre 3 y 50 caracteres")
+    @Column(nullable = false, unique = true)
     private String nombre;
-
-
-    //Marca Gorro
-    @OneToMany(mappedBy = "marca")
-    private List<Marcas> marcas;
-
-
 }
