@@ -2,6 +2,7 @@ package com.TopStyleHat.Controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,36 +14,38 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.TopStyleHat.DTO.MaterialDTO;
 
-import com.TopStyleHat.DTO.MarcaDTO;
-import com.TopStyleHat.Model.Marca;
-import com.TopStyleHat.Service.MarcaService;
+import com.TopStyleHat.Model.Material;
+import com.TopStyleHat.Service.MaterialService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/Marcas")
-public class MarcaController {
+@RequestMapping("/api/v1/Material")
+
+public class MaterialController {
 
     @Autowired
-    MarcaService marcaService;
+    MaterialService materialService;
 
-    //Mostrar todas las Marcas
+
+    //Mostrar todos los materiales
     @GetMapping
-    public ResponseEntity<?> TodasLasMarcas(){
-        List<MarcaDTO> marcas = marcaService.MostrarTodas();
-        if (!marcas.isEmpty()) {
-            return new ResponseEntity<>("No hay Marcas", HttpStatus.OK);
+    public ResponseEntity<?> TodosLosMateriales(){
+        List <MaterialDTO> materiales = materialService.mostrarTodos();
+        if (!materiales.isEmpty()) {
+            return new ResponseEntity<>("No hay Materiales", HttpStatus.OK);
         }
-        return new ResponseEntity<>("No hay marcas", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("No hay Materiales", HttpStatus.NO_CONTENT);
     }
 
     //Buscar por id
     @GetMapping("/{id}")
     public ResponseEntity<?> BuscarPorId(@PathVariable Integer id){
         try {
-            MarcaDTO marca = marcaService.buscarPorId(id);
-            return new ResponseEntity<>(marca, HttpStatus.ACCEPTED);
+            MaterialDTO material = materialService.buscarPorId(id);
+            return new ResponseEntity<>(material, HttpStatus.ACCEPTED); 
         } catch (RuntimeException e) {
             return new ResponseEntity<>("No se encontro la Marca", HttpStatus.NOT_FOUND);
         }
@@ -50,20 +53,20 @@ public class MarcaController {
 
     //Agregar
     @PostMapping
-    public ResponseEntity<?> agregarMarca(@Valid @RequestBody Marca marca){
+    public ResponseEntity<?> agregarMaterial(@Valid @RequestBody Material material){
         try {
-            return new ResponseEntity<>(marcaService.guardarMarca(marca), HttpStatus.CREATED);
+            return new ResponseEntity<>(materialService.guardarMaterial(material), HttpStatus.CREATED);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>("No se guardo la Marca", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("No se guardo el material", HttpStatus.BAD_REQUEST);
         }
     }
 
     //Actualizar
     @PutMapping("/id")
-    public ResponseEntity<Marca> actualizarBrand(@PathVariable Integer id, @RequestBody Marca brand){
+    public ResponseEntity<Material> actualizarStuff(@PathVariable Integer id, @RequestBody Material stuff){
         try {
-            Marca newBrand = marcaService.actualizarMarca(id, brand);
-            return new ResponseEntity<>(newBrand, HttpStatus.OK);
+            Material newStuff = materialService.actualizarMaterial(id, stuff);
+            return new ResponseEntity<>(newStuff, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -71,16 +74,16 @@ public class MarcaController {
 
     //Eliminar
     @DeleteMapping
-    public ResponseEntity<String> eliminarBrand(@PathVariable Integer id){
-        String resultado = marcaService.EliminarMarca(id);
+    public ResponseEntity<String> eliminarStuff(@PathVariable Integer id){
+        String resultado = materialService.eliminarMaterial(id);
 
-        if (resultado.contains("Eliminada")){
+        if (resultado.contains("Eliminado")){
             return new ResponseEntity<>(resultado, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
         }
-
     }
+
 
 
 

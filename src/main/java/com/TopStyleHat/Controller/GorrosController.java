@@ -14,60 +14,69 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.TopStyleHat.DTO.GorroDTO;
-import com.TopStyleHat.Model.Gorro;
-import com.TopStyleHat.Service.GorroService;
+
+import com.TopStyleHat.DTO.GorrosDTO;
+import com.TopStyleHat.Model.Gorros;
+import com.TopStyleHat.Service.GorrosService;
 
 import jakarta.validation.Valid;
 
+
 @RestController
 @RequestMapping("/api/v1/gorros")
-public class GorroController {
+
+public class GorrosController {
 
     @Autowired
-    private GorroService gorroService;
+    private GorrosService gorrosService;
 
+    //Mostrar todos
     @GetMapping
     public ResponseEntity<?> TodosLosGorros(){
-        List<GorroDTO> gorros = gorroService.obtenerTodos();
+        List <GorrosDTO> gorros = gorrosService.obtenerTodos();
         if (!gorros.isEmpty()) {
             return new ResponseEntity<>(gorros, HttpStatus.OK);
         }
         return new ResponseEntity<>("No hay Gorros", HttpStatus.NO_CONTENT);
     }
 
+    //Buscar por id
     @GetMapping("/{id}")
     public ResponseEntity<?> BuscarPorId(@PathVariable Integer id){
         try {
-            GorroDTO gorro = gorroService.buscarPorId(id);
-            return new ResponseEntity<>(gorro, HttpStatus.ACCEPTED);
+            GorrosDTO gorros = gorrosService.buscarPorId(id);
+            return new ResponseEntity<>(gorros, HttpStatus.ACCEPTED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>("No se encontro el gorro", HttpStatus.NOT_FOUND);
         }
     }
 
+    //Guardar
     @PostMapping
-    public ResponseEntity<?> agregarGorro(@Valid @RequestBody Gorro gorro){
+    public ResponseEntity<?> agregarGorros(@Valid @RequestBody Gorros gorros){
         try {
-            return new ResponseEntity<>(gorroService.guardarGorro(gorro), HttpStatus.CREATED);
+            return new ResponseEntity<>(gorrosService.guardarGorros(gorros), HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>("No se guardo el gorro", HttpStatus.BAD_REQUEST);
         }
     }
 
+    //Actualizar
     @PutMapping("/id")
-    public ResponseEntity<Gorro> actualizarGorro (@PathVariable Integer id, @RequestBody Gorro hat){
+    public ResponseEntity<Gorros> actualizarGorros (@PathVariable Integer id, @RequestBody Gorros hats){
         try {
-            Gorro newHat = gorroService.ActualizarGorro(id, hat);
-            return new ResponseEntity<>(newHat, HttpStatus.OK);
+            Gorros newHats = gorrosService.ActualizarGorros(id, hats);
+            return new ResponseEntity<>(newHats, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    //Eliminar
+
     @DeleteMapping("/id")
     public ResponseEntity<String> eliminarGorro(@PathVariable Integer id){
-        String resultado = gorroService.Eliminar(id);
+        String resultado = gorrosService.Eliminar(id);
 
         if (resultado.contains("eliminado")) {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
@@ -75,8 +84,5 @@ public class GorroController {
             return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
         }
     }
-
-
-
 
 }

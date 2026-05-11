@@ -12,17 +12,18 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "Gorros")
 
-
-public class Gorro {
+public class Gorros {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,4 +44,7 @@ public class Gorro {
     @Min(value = 1, message = "el precio minimo es ")
     @Max(value = 5, message = "El valor maximo es")
     private Integer precio;
+
+    
+
 }
