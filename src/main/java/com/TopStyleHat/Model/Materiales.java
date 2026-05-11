@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "Gorro - Materiales") 
+@Entity(name = "materiales") 
 
 public class Materiales {
 

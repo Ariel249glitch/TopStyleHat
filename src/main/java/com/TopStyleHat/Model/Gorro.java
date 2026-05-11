@@ -65,9 +65,14 @@ public class Gorro {
     @JoinColumn(name = "sexo_id")
     private Sexo sexo;
 
-    //gorro - boleta
+
+    //gorro - gorros
     @OneToMany(mappedBy = "gorro")
     private List<Gorros> gorros;
+
+    @ManyToOne
+    @JoinColumn(name = "tipo_id")
+    private Tipo tipo;
 
 
 }
